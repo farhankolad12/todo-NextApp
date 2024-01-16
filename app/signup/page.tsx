@@ -4,15 +4,19 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 import { register } from "@/app/lib/actions";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [state, formAction] = useFormState(register, undefined);
 
-  console.log(state);
+  const router = useRouter();
 
   useEffect(() => {
-    state?.success && alert("User Registered!");
-  }, [state?.success]);
+    if (state?.success) {
+      router.push("/login");
+      alert("User Registered!");
+    }
+  }, [state?.success, router]);
 
   return (
     <div className="bg-light p-5 ">
@@ -44,6 +48,9 @@ export default function Page() {
             placeholder="Confirm password"
             className="form-control"
           />
+          {state?.error && (
+            <span className="text-danger fw-bold">{state.error}</span>
+          )}
         </div>
         <button type="submit" className="btn btn-primary ms-3">
           Sign up
