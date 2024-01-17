@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "./ui/dashboard/Navbar";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +27,9 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <SessionProvider>
+          <Navbar />
+        </SessionProvider>
         {children}
         <script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
